@@ -17,28 +17,31 @@ class AnagramCheating
 		
 	public boolean isAnagram()
 	{
-		st1 = trim(st1);
-		if(st1.length() == 0)
-			throw new IllegalArgumentException("String 1 has no whiteSpace characters");
 		
-		st2 = trim(st2);
 		
-		if(st1.length() == 0)
-			throw new IllegalArgumentException("String 1 has no whiteSpace characters");
 		
-		if(st1.length() != st2.length())
+		String testSt1 = trim(st1);
+		if(testSt1.length() == 0)
+			throw new IllegalArgumentException("String 1 has no non-whiteSpace characters");
+		
+		String testSt2 = trim(st2);
+		
+		if(testSt1.length() == 0)
+			throw new IllegalArgumentException("String 1 has no non-whiteSpace characters");
+		
+		if(testSt1.length() != testSt2.length())
 			return false;
 		
-		char[] arraySt1 = st1.toLowerCase().toCharArray();
-		char[] arraySt2 = st2.toLowerCase().toCharArray();
+		char[] arraySt1 = testSt1.toLowerCase().toCharArray();
+		char[] arraySt2 = testSt2.toLowerCase().toCharArray();
 		
 		Arrays.sort(arraySt1);
 		Arrays.sort(arraySt2);
 		
-		st1 = new String(arraySt1);
-		st2 = new String(arraySt2);
+		testSt1 = new String(arraySt1);
+		testSt2 = new String(arraySt2);
 				
-		return (st1.equals(st2)); 
+		return (testSt1.equals(testSt2)); 
 	}
 	
 		
@@ -66,23 +69,22 @@ class AnagramHashMap
 	
 	public boolean isAnagram()
 	{
-		st1 = trim(st1);
-		if(st1.length() == 0)
+		String testSt1 = trim(st1);
+		if(testSt1.length() == 0)
 			throw new IllegalArgumentException("String 1 has no whiteSpace characters");
 					
-		st2 = trim(st2);
+		String testSt2 = trim(st2);
+		if(testSt2.length() == 0)
+			throw new IllegalArgumentException("String 2 has no whiteSpace characters");
 		
-		if(st1.length() == 0)
-			throw new IllegalArgumentException("String 1 has no whiteSpace characters");
 		
-		
-		if(st1.length() != st2.length())
+		if(testSt1.length() != testSt2.length())
 			return false;
 			
-		char[] arraySt1 = st1.toLowerCase().toCharArray();
-		char[] arraySt2 = st2.toLowerCase().toCharArray();
+		char[] arraySt1 = testSt1.toLowerCase().toCharArray();
+		char[] arraySt2 = testSt2.toLowerCase().toCharArray();
 		
-		//map st1
+		//map testSt1
 		for(char a : arraySt1)
 		{
 			if (map.get(a) == null)
@@ -91,7 +93,7 @@ class AnagramHashMap
 				map.put(a, map.get(a) + 1);
 		}
 		
-		// reverse map st2
+		// reverse map testSt2
 		for (char a : arraySt2)
 		{	
 			map.put(a, map.get(a) - 1);
@@ -117,7 +119,9 @@ public class IsAnagram
 	{
 		String STRING1 = "   Ana are mere    ";
 		String STRING2 = " erem   era  ana ";
-		String STRING3 = " erem   era  ane ";
+		String STRING3 = " erem       era  ane ";
+		String STRING4 = "           ";
+		
 		
 		AnagramCheating test = new AnagramCheating(STRING1, STRING2);
 		
@@ -138,6 +142,20 @@ public class IsAnagram
 		try {
 			long startTime = System.nanoTime();
 			System.out.println(testHash.isAnagram());	
+			long endTime = System.nanoTime();
+			System.out.println((endTime - startTime) +" nanoseconds\n");
+		}
+		
+		catch (IllegalArgumentException e)
+		{
+			System.err.println(e.getLocalizedMessage());
+		}
+		
+AnagramHashMap testHash1 = new AnagramHashMap(STRING3, STRING4);
+		
+		try {
+			long startTime = System.nanoTime();
+			System.out.println(testHash1.isAnagram());	
 			long endTime = System.nanoTime();
 			System.out.println((endTime - startTime) +" nanoseconds\n");
 		}
